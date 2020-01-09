@@ -2,13 +2,16 @@
 
 namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ApiResource()
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -46,6 +49,17 @@ class User
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $sex;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Publication", mappedBy="user", orphanRemoval=true)
+     */
+    private $publications;
+
+
+    public function __construct()
+    {
+        $this->publications = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -122,5 +136,68 @@ class User
         $this->sex = $sex;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Publication[]
+     */
+    public function getPublications(): Collection
+    {
+        return $this->publications;
+    }
+
+    public function addPublication(Publication $publication): self
+    {
+        if (!$this->publications->contains($publication)) {
+            $this->publications[] = $publication;
+            $publication->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePublication(Publication $publication): self
+    {
+        if ($this->publications->contains($publication)) {
+            $this->publications->removeElement($publication);
+            // set the owning side to null (unless already changed)
+            if ($publication->getUser() === $this) {
+                $publication->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRoles()
+    {
+       return ['ROLE_USER'];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getSalt()
+    {
+        return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getUsername()
+    {
+        // TODO: Implement getUsername() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
     }
 }

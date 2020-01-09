@@ -1,13 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bbf8c315-d94b-406e-ad3c-8dcc2ab3c2f1" name="Default Changelist" comment="" />
+    <list default="true" id="bbf8c315-d94b-406e-ad3c-8dcc2ab3c2f1" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/PublicationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/my-api.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/my-api.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataFixtures/AppFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/AppFixtures.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution>
       <executable />
@@ -31,6 +44,9 @@
       </path>
     </expand>
     <select />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -126,6 +142,7 @@
       <path value="$PROJECT_DIR$/vendor/symfony/web-link" />
       <path value="$PROJECT_DIR$/vendor/willdurand/negotiation" />
       <path value="$PROJECT_DIR$/vendor/psr/link" />
+      <path value="$PROJECT_DIR$/vendor/fzaninotto/faker" />
     </include_path>
   </component>
   <component name="ProjectId" id="1W7m5ZZFHZqI47ZPIH2UMLJebHB" />
@@ -137,6 +154,7 @@
   <component name="PropertiesComponent">
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
@@ -145,12 +163,7 @@
       <list>
         <serviceView>
           <treeState>
-            <expand>
-              <path>
-                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="root:MySQL - api_db@127.0.0.1" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              </path>
-            </expand>
+            <expand />
             <select />
           </treeState>
         </serviceView>
@@ -168,6 +181,7 @@
       <option name="presentableId" value="Default" />
       <updated>1578508824706</updated>
       <workItem from="1578508826929" duration="9781000" />
+      <workItem from="1578585601550" duration="9399000" />
     </task>
     <servers />
   </component>
@@ -183,10 +197,14 @@
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
     <state width="196" height="457" key="HiddenNamespacesPopup/0.0.1920.1160@0.0.1920.1160" timestamp="1578510977722" />
-    <state x="297" y="395" key="NewPhpClassDialog" timestamp="1578509490538">
+    <state x="297" y="395" key="NewPhpClassDialog" timestamp="1578596736007">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state x="297" y="395" key="NewPhpClassDialog/0.0.1920.1160@0.0.1920.1160" timestamp="1578509490538" />
+    <state x="297" y="395" key="NewPhpClassDialog/0.0.1920.1160@0.0.1920.1160" timestamp="1578596736007" />
+    <state x="0" y="0" key="com.intellij.ide.util.TipDialog" timestamp="1578591245941">
+      <screen x="0" y="0" width="1920" height="1160" />
+    </state>
+    <state x="0" y="0" key="com.intellij.ide.util.TipDialog/0.0.1920.1160@0.0.1920.1160" timestamp="1578591245941" />
     <state x="143" y="272" key="run.anything.popup" timestamp="1578509365750">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
