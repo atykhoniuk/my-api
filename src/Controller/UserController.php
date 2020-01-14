@@ -16,27 +16,27 @@ use Symfony\Component\Serializer\Serializer;
  */
 class UserController extends AbstractController
 {
-/**
- * @Route("/add", name="user_add",methods={"POST"})
- */
-public function add(Request $request)
-{
-    /**@var Serializer $serializer*/
-    $serializer=$this->get('serializer');
-    $userAdd=$serializer->deserialize($request->getContent(),User::class,'json');
+    /**
+     * @Route("/add", name="user_add",methods={"POST"})
+     */
+    public function add(Request $request)
+    {
+        /**@var Serializer $serializer*/
+        $serializer=$this->get('serializer');
+        $userAdd=$serializer->deserialize($request->getContent(),User::class,'json');
 
-    $em=$this->getDoctrine()->getManager();
-    $em->persist($userAdd);
-    $em->flush();
-    return $this->json($userAdd);
-}
+        $em=$this->getDoctrine()->getManager();
+        $em->persist($userAdd);
+        $em->flush();
+        return $this->json($userAdd);
+    }
     /**
      * @Route("/fetch_all", name="fetch_all",methods={"GET"})
      */
-public function fetchAll()
-{
-    return $this->json($this->getDoctrine()->getRepository(User::class)->findAll());
-}
+    public function fetchAll()
+    {
+        return $this->json($this->getDoctrine()->getRepository(User::class)->findAll());
+    }
     /**
      * @Route("/fetch/{id}", name="fetch",methods={"GET"})
      */
