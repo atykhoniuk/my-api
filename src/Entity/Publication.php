@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Collection;
 
 /**
  * @ApiResource()
@@ -38,6 +40,27 @@ class Publication
      * @ORM\Column(type="datetime")
      */
     private $date_of_pub;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="publication")
+     */
+    private $comments;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
+
+    /*private $comments;
+
+    public function __construct()
+    {
+        $this->comments=new ArrayCollection();
+    }
+    public function getComments():\Doctrine\Common\Collections\Collection
+    {
+        return $this->comments;
+    }*/
 
     public function getId(): ?int
     {
@@ -91,4 +114,37 @@ class Publication
 
         return $this;
     }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection|Comment[]
+     */
+    public function getComments(): \Doctrine\Common\Collections\Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setPublication($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getPublication() === $this) {
+                $comment->setPublication(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }
