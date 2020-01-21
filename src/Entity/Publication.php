@@ -8,7 +8,10 @@ use Doctrine\ORM\Mapping as ORM;
 use phpDocumentor\Reflection\Types\Collection;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ *     )
  * @ORM\Entity(repositoryClass="App\Repository\PublicationRepository")
  */
 class Publication
