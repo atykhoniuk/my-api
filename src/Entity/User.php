@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ApiResource(
@@ -31,33 +31,43 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"read"})
+     * @Assert\NotBlank()
      */
     private $fio;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Email()
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(min=6,max=255)
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read"})
+     * @Assert\NotBlank()
      */
     private $phone_num;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"read"})
+     * @Assert\NotBlank()
+     * @Assert\Length(min=10,max=10)
      */
     private $birthdaydate;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"read"})
+     * @Assert\NotBlank()
      */
     private $sex;
 
