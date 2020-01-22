@@ -5,6 +5,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -17,6 +18,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "groups"={"read"}
  *     }
  * )
+ * @UniqueEntity("username")
+ * @UniqueEntity("email")
+ * @UniqueEntity("phoneNum")
  */
 class User implements UserInterface
 {
@@ -27,6 +31,13 @@ class User implements UserInterface
      * @Groups({"read"})
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"read"})
+     * @Assert\NotBlank()
+     */
+    private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -46,21 +57,35 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Length(min=6,max=255)
+     * @Assert\Regex(
+     *     pattern="/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{7,}/",
+     *     message="Password must be seven characters long and contain at least one digit, one upper case and one lower case letter"
+     * )
      */
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"read"})
      * @Assert\NotBlank()
+     * @Assert\Expression(
+     *     "this.getPassword()==this.getRetypedPassword()",
+     *     message="Password does not match"
+     * )
      */
-    private $phone_num;
+    private $retypedPassword;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"read"})
      * @Assert\NotBlank()
      * @Assert\Length(min=10,max=10)
+     */
+    private $phoneNum;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"read"})
+     * @Assert\NotBlank()
+     *
      */
     private $birthdaydate;
 
@@ -113,6 +138,18 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getUsername(): ?string
+    {
+        return $this->fio;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
     public function getEmail(): ?string
     {
         return $this->email;
@@ -139,12 +176,12 @@ class User implements UserInterface
 
     public function getPhoneNum(): ?string
     {
-        return $this->phone_num;
+        return $this->phoneNum;
     }
 
-    public function setPhoneNum(string $phone_num): self
+    public function setPhoneNum(string $phoneNum): self
     {
-        $this->phone_num = $phone_num;
+        $this->phoneNum = $phoneNum;
 
         return $this;
     }
@@ -191,13 +228,6 @@ class User implements UserInterface
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getUsername()
-    {
-        // TODO: Implement getUsername() method.
-    }
 
     /**
      * @inheritDoc
@@ -236,6 +266,18 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+
+    public function getRetypedPassword()
+    {
+        return $this->retypedPassword;
+    }
+
+
+    public function setRetypedPassword($retypedPassword): void
+    {
+        $this->retypedPassword = $retypedPassword;
     }
 
     /**
