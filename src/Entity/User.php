@@ -12,7 +12,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ApiResource(
- *     itemOperations={"get"},
+ *     itemOperations={
+ *          "get"={
+ *                  "access_control"="is_granted('IS_AUTHENTICATED_FULLY')"
+ *                 }
+ *     },
  *     collectionOperations={"post"},
  *     normalizationContext={
  *          "groups"={"read"}
@@ -108,6 +112,24 @@ class User implements UserInterface
      */
     private $comments;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UserRoles", mappedBy="user")
+     */
+    private $userRoles;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -117,6 +139,8 @@ class User implements UserInterface
     {
         $this->publications = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->userRoles = new ArrayCollection();
+        $this->testRoles = new ArrayCollection();
 
 
     }
@@ -281,8 +305,38 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|Comment[]
+     * @return Collection|UserRoles[]
      */
+    public function getUserRoles(): Collection
+    {
+        return $this->userRoles;
+    }
+
+    public function addUserRole(UserRoles $userRole): self
+    {
+        if (!$this->userRoles->contains($userRole)) {
+            $this->userRoles[] = $userRole;
+            $userRole->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserRole(UserRoles $userRole): self
+    {
+        if ($this->userRoles->contains($userRole)) {
+            $this->userRoles->removeElement($userRole);
+            // set the owning side to null (unless already changed)
+            if ($userRole->getUser() === $this) {
+                $userRole->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+
+
 
 
 }
