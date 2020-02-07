@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *     itemOperations={
  *          "get"={
- *                  "access_control"="is_granted('IS_AUTHENTICATED_FULLY')"
+ *                  "access_control"="is_granted('ROLE_SUPERADMIN')"
  *                 }
  *     },
  *     collectionOperations={"post"},
@@ -113,9 +113,18 @@ class User implements UserInterface
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\UserRoles", mappedBy="user")
+     * @var Collection|Roles[]
+     * @ORM\ManyToMany(targetEntity="App\Entity\Roles", inversedBy="users")
+     *@ORM\JoinTable(
+     *      name="user_roles",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="roles_id", referencedColumnName="id")}
+     * )
      */
-    private $userRoles;
+    private $roles;
+
+
+
 
 
 
@@ -139,8 +148,7 @@ class User implements UserInterface
     {
         $this->publications = new ArrayCollection();
         $this->comments = new ArrayCollection();
-        $this->userRoles = new ArrayCollection();
-        $this->testRoles = new ArrayCollection();
+        $this->roles = new ArrayCollection();
 
 
     }
@@ -239,9 +247,9 @@ class User implements UserInterface
     /**
      * @inheritDoc
      */
-    public function getRoles()
+    public function getRoles1()
     {
-       return ['ROLE_USER'];
+       return ['ROLE_SUPERADMIN'];
     }
 
     /**
@@ -304,36 +312,23 @@ class User implements UserInterface
         $this->retypedPassword = $retypedPassword;
     }
 
-    /**
-     * @return Collection|UserRoles[]
-     */
-    public function getUserRoles(): Collection
+
+    public function setRoles(Collection $roles)
     {
-        return $this->userRoles;
+        $this->roles = $roles;
     }
 
-    public function addUserRole(UserRoles $userRole): self
+    public function getRoles()
     {
-        if (!$this->userRoles->contains($userRole)) {
-            $this->userRoles[] = $userRole;
-            $userRole->setUser($this);
-        }
-
-        return $this;
+        return array_map(
+            function ($role) {
+                return $role->getName();
+            },
+            $this->roles->toArray()
+        );
     }
 
-    public function removeUserRole(UserRoles $userRole): self
-    {
-        if ($this->userRoles->contains($userRole)) {
-            $this->userRoles->removeElement($userRole);
-            // set the owning side to null (unless already changed)
-            if ($userRole->getUser() === $this) {
-                $userRole->setUser(null);
-            }
-        }
 
-        return $this;
-    }
 
 
 
