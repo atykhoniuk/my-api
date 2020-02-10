@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Comment;
 use App\Entity\Publication;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -33,6 +34,7 @@ class AppFixtures extends Fixture
     {
         $this->loadUsers($manager);
         $this->loadPublication($manager);
+        $this->loadComment($manager);
     }
 
 
@@ -73,7 +75,27 @@ class AppFixtures extends Fixture
             $pub->setDateOfPub($this->faker->dateTimeThisYear);
             $pub->setUser($user);
             $pub->setFoto($this->faker->realText(20));
+
+            $this->setReference("publication_$i",$pub);
+
             $manager->persist($pub);
+        }
+        $manager->flush();
+    }
+    public function loadComment(ObjectManager $manager)
+    {
+        for($i=0;$i<10;$i++)
+        {
+            for($j=0;$j<rand(1,6);$j++)
+            {
+                $comment= new Comment();
+                $comment->setUser($this->getReference('Alex'));
+                $comment->setContent($this->faker->realText());
+                $comment->setPublished($this->faker->dateTimeThisYear());
+                $comment->setPublication($this->getReference("publication_$i"));
+
+                $manager->persist($comment);
+            }
         }
         $manager->flush();
     }
